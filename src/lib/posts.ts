@@ -36,6 +36,10 @@ function parseFile(filename: string): Post {
 }
 
 export function getAllPosts(): PostMeta[] {
+  if (!fs.existsSync(POSTS_DIR)) {
+    return [];
+  }
+
   const files = fs
     .readdirSync(POSTS_DIR)
     .filter((f) => f.endsWith(".md") || f.endsWith(".mdx"));
