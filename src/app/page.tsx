@@ -95,7 +95,6 @@ export default function HomePage() {
           <CTAButton href={SITE.spreadsheetUrl}>
             Browse Kakobuy Spreadsheet →
           </CTAButton>
-          <CTAButton variant="secondary">Sign Up to Kakobuy</CTAButton>
         </div>
       </section>
 
