@@ -16,41 +16,35 @@ export default function NewsPage() {
   return (
     <article className="px-4 py-16">
       <div className="mx-auto max-w-3xl">
-        <Link
-          href="/"
-          className="text-sm font-medium text-orange-600 hover:underline"
-        >
+        <Link href="/" className="text-sm font-medium text-accent hover:underline">
           ← Back to Home
         </Link>
 
-        <h1 className="mt-6 text-4xl font-bold text-zinc-900">
+        <h1 className="mt-6 text-4xl font-bold text-foreground">
           Kakobuy Spreadsheet News
         </h1>
-        <p className="mt-4 text-zinc-600">
-          Explore the latest <strong>Kakobuy Spreadsheet</strong> news, detailed
-          shopping guides, and expert insights for {SITE.year}. Discover how to
+        <p className="mt-4 text-muted">
+          Explore the latest <strong className="text-foreground">Kakobuy Spreadsheet</strong> news,
+          detailed shopping guides, and expert insights for {SITE.year}. Discover how to
           identify trusted sellers, evaluate QC photos, compare different buying
-          platforms, and avoid common mistakes when using the Kakobuy
-          Spreadsheet.
+          platforms, and avoid common mistakes when using the Kakobuy Spreadsheet.
         </p>
 
-        <div className="mt-10 space-y-6">
+        <div className="mt-10 space-y-4">
           {posts.map((post) => (
             <Link
               key={post.slug}
               href={`/kakobuy-spreadsheet-news/${post.slug}`}
-              className="block rounded-xl border border-zinc-200 p-6 transition hover:border-orange-300 hover:shadow-md"
+              className="block border border-border bg-card p-6 transition-colors hover:border-accent/40"
             >
-              <p className="text-xs font-medium text-orange-600">
+              <p className="font-display text-xs uppercase tracking-[0.15em] text-accent">
                 {formatDate(post.date)}
               </p>
-              <h2 className="mt-2 text-lg font-semibold text-zinc-900">
+              <h2 className="mt-2 text-lg font-semibold text-foreground">
                 {post.title}
               </h2>
-              <p className="mt-2 text-sm text-zinc-600">{post.excerpt}</p>
-              <p className="mt-3 text-sm font-medium text-orange-600">
-                Read more →
-              </p>
+              <p className="mt-2 text-sm text-muted">{post.excerpt}</p>
+              <p className="mt-3 text-sm font-medium text-accent">Read more →</p>
             </Link>
           ))}
         </div>

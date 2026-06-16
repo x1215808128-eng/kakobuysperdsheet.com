@@ -1,15 +1,21 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { buildMetadata } from "@/lib/seo";
 import { SITE } from "@/lib/site";
 import "./globals.css";
 
-const poppins = Poppins({
+const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-poppins",
+  variable: "--font-inter",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-space-grotesk",
 });
 
 export const metadata: Metadata = buildMetadata({
@@ -22,8 +28,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en-US" className={`${poppins.variable} h-full`}>
-      <body className="flex min-h-full flex-col antialiased">
+    <html
+      lang="en-US"
+      className={`${inter.variable} ${spaceGrotesk.variable} h-full`}
+    >
+      <body className="flex min-h-full flex-col bg-background antialiased text-foreground">
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

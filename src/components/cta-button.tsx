@@ -4,7 +4,8 @@ import { SITE } from "@/lib/site";
 type CTAButtonProps = {
   href?: string;
   children: React.ReactNode;
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "outline";
+  size?: "default" | "lg";
   className?: string;
 };
 
@@ -12,14 +13,22 @@ export function CTAButton({
   href = SITE.kakobuyRegisterUrl,
   children,
   variant = "primary",
+  size = "default",
   className = "",
 }: CTAButtonProps) {
-  const base =
-    "inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold transition-colors";
+  const sizeStyles =
+    size === "lg"
+      ? "w-full min-h-[3.25rem] px-10 py-4 text-sm tracking-[0.18em] sm:w-auto sm:min-w-[280px]"
+      : "w-full px-6 py-3 text-xs tracking-[0.15em] sm:w-auto";
+
+  const base = `inline-flex items-center justify-center gap-3 rounded-none font-display font-bold uppercase transition-all ${sizeStyles}`;
+
   const styles =
     variant === "primary"
-      ? "bg-orange-500 text-white hover:bg-orange-600"
-      : "border border-orange-500 text-orange-600 hover:bg-orange-50";
+      ? "bg-accent text-black hover:bg-accent-dim"
+      : variant === "outline"
+        ? "border border-accent bg-transparent text-foreground hover:bg-accent/10"
+        : "border border-border bg-card text-foreground hover:border-accent hover:text-accent";
 
   const isExternal = href.startsWith("http");
 

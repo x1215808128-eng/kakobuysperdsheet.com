@@ -14,44 +14,58 @@ export default function IsKakobuySafePage() {
   return (
     <article className="px-4 py-16">
       <div className="mx-auto max-w-3xl">
-        <Link href="/" className="text-sm font-medium text-orange-600 hover:underline">
+        <Link href="/" className="text-sm font-medium text-accent hover:underline">
           ← Back to Home
         </Link>
 
-        <h1 className="mt-6 text-4xl font-bold text-zinc-900">
+        <h1 className="mt-6 text-4xl font-bold text-foreground">
           Is Kakobuy Safe? Full Review {SITE.year}
         </h1>
 
-        <p className="mt-6 leading-relaxed text-zinc-600">
+        <p className="mt-6 leading-relaxed text-muted">
           Many users discover products through the{" "}
-          <strong>Kakobuy Spreadsheet</strong> and wonder whether Kakobuy is a
-          safe shopping agent. This review covers the key factors: payment
-          methods, QC inspection, warehouse storage, shipping, and refund
-          policies.
+          <strong className="text-foreground">Kakobuy Spreadsheet</strong> and wonder
+          whether Kakobuy is a safe shopping agent. This review covers the key
+          factors: payment methods, QC inspection, warehouse storage, shipping, and
+          refund policies.
         </p>
 
-        <h2 className="mt-10 text-2xl font-bold text-zinc-900">
+        <h2 className="mt-10 text-2xl font-bold text-foreground">
           What Makes Kakobuy Reasonably Safe
         </h2>
-        <ul className="mt-4 list-disc space-y-2 pl-6 text-zinc-600">
-          <li>QC photos before you approve shipment</li>
-          <li>Warehouse storage with tracking</li>
-          <li>Multiple payment options including PayPal</li>
-          <li>Established agent used by large rep communities</li>
+        <ul className="mt-4 space-y-2 text-muted">
+          {[
+            "QC photos before you approve shipment",
+            "Warehouse storage with tracking",
+            "Multiple payment options including PayPal",
+            "Established agent used by large rep communities",
+          ].map((item) => (
+            <li key={item} className="flex gap-3">
+              <span className="text-accent">+</span>
+              {item}
+            </li>
+          ))}
         </ul>
 
-        <h2 className="mt-10 text-2xl font-bold text-zinc-900">
+        <h2 className="mt-10 text-2xl font-bold text-foreground">
           Safety Tips When Using Kakobuy Spreadsheet
         </h2>
-        <ul className="mt-4 list-disc space-y-2 pl-6 text-zinc-600">
-          <li>Always review QC photos before shipping</li>
-          <li>Compare multiple sellers for the same item</li>
-          <li>Check seller ratings and community feedback</li>
-          <li>Use insurance for expensive items</li>
+        <ul className="mt-4 space-y-2 text-muted">
+          {[
+            "Always review QC photos before shipping",
+            "Compare multiple sellers for the same item",
+            "Check seller ratings and community feedback",
+            "Use insurance for expensive items",
+          ].map((item) => (
+            <li key={item} className="flex gap-3">
+              <span className="text-accent">+</span>
+              {item}
+            </li>
+          ))}
         </ul>
 
         <div className="mt-10">
-          <CTAButton>Browse Kakobuy Spreadsheet →</CTAButton>
+          <CTAButton href={SITE.spreadsheetUrl}>Browse Kakobuy Spreadsheet →</CTAButton>
         </div>
       </div>
     </article>
