@@ -60,6 +60,7 @@ export function HeroQCGallery({ strip: initialStrip }: { strip: HeroQCImage[] })
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const thumbRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const thumbScrollRef = useRef<HTMLDivElement>(null);
 
   const goTo = useCallback((index: number) => {
     setActiveIndex(index % strip.length);
@@ -98,11 +99,16 @@ export function HeroQCGallery({ strip: initialStrip }: { strip: HeroQCImage[] })
   }, [paused, goNext, strip.length]);
 
   useEffect(() => {
+    const container = thumbScrollRef.current;
     const thumb = thumbRefs.current[activeIndex];
-    thumb?.scrollIntoView({
+    if (!container || !thumb) return;
+
+    const targetLeft =
+      thumb.offsetLeft - (container.clientWidth - thumb.offsetWidth) / 2;
+
+    container.scrollTo({
+      left: Math.max(0, targetLeft),
       behavior: "smooth",
-      block: "nearest",
-      inline: "center",
     });
   }, [activeIndex]);
 
@@ -144,7 +150,10 @@ export function HeroQCGallery({ strip: initialStrip }: { strip: HeroQCImage[] })
           </p>
         </div>
 
-        <div className="qc-scroll -mx-1 flex gap-3 overflow-x-auto px-1 pb-2">
+        <div
+          ref={thumbScrollRef}
+          className="qc-scroll -mx-1 flex gap-3 overflow-x-auto px-1 pb-2"
+        >
           {strip.map((item, index) => {
             const isActive = index === activeIndex;
 

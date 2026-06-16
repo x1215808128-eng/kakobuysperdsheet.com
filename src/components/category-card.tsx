@@ -49,8 +49,8 @@ export function CategoryCard({ category, index }: CategoryCardProps) {
       <div
         className={`absolute inset-0 transition-opacity duration-300 ${
           previewLightBackground
-            ? "bg-gradient-to-t from-black/50 via-transparent to-transparent group-hover:from-black/60"
-            : "bg-gradient-to-t from-black via-black/70 to-black/25 group-hover:from-black/95 group-hover:via-black/55"
+            ? "bg-gradient-to-t from-black/40 via-transparent to-transparent group-hover:from-black/50"
+            : "bg-gradient-to-t from-black/55 via-black/20 to-black/5 group-hover:from-black/70 group-hover:via-black/30"
         }`}
       />
 
