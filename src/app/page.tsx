@@ -111,6 +111,9 @@ export default async function HomePage() {
                     &amp; Best Batches
                   </p>
                 </div>
+              </div>
+
+              <div className="mt-4 flex justify-center lg:mt-5 lg:justify-start">
                 <HeroContactPromo className="lg:pt-1" />
               </div>
 

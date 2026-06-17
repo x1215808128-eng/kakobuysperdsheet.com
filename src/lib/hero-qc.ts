@@ -8,7 +8,7 @@ export type HeroQCImage = {
 };
 
 export const HERO_QC_CONTACT: HeroQCImage = {
-  src: "/qc/contact-customer-service.png?v=4",
+  src: "/qc/contact-customer-service-card.png?v=1",
   alt: "Kakobuy customer service — WhatsApp and QR code",
   label: "CONTACT",
   status: "SUPPORT",

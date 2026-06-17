@@ -1,9 +1,6 @@
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
-import {
-  CONTACT_CARD_CLASS,
-  CONTACT_IMAGE,
-} from "@/components/contact-promo-card";
+import { ContactPromoCard } from "@/components/contact-promo-card";
 import type { HeroQCImage } from "@/lib/hero-qc";
 import type { HeroQcCategoryKey } from "@/lib/kakobuy-hero-images";
 import { isLegacyPlaceholder } from "@/lib/kakobuy-hero-products";
@@ -32,8 +29,7 @@ function QCImageFrame({
   fit?: "cover" | "contain" | "responsive";
 }) {
   const isContactGraphic =
-    image.src.includes("contact-customer-service") ||
-    image.src === CONTACT_IMAGE;
+    image.src.includes("contact-customer-service");
 
   const fitClass = isContactGraphic
     ? "object-contain object-center p-1"
@@ -128,8 +124,7 @@ export function HeroQCGallery({ strip: initialStrip }: { strip: HeroQCImage[] })
 
   const activeItem = strip[activeIndex];
   const isContactActive = Boolean(
-    activeItem?.src.includes("contact-customer-service") ||
-      activeItem?.src === CONTACT_IMAGE,
+    activeItem?.src.includes("contact-customer-service"),
   );
 
   return (
@@ -140,56 +135,43 @@ export function HeroQCGallery({ strip: initialStrip }: { strip: HeroQCImage[] })
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
     >
-      {/* Mobile: fixed-width card centered with flex. Desktop: full-width column. */}
-      <div className="flex w-full justify-center">
-        <div
-          className={`hud-frame shrink-0 overflow-hidden border border-border transition-[width,height] duration-500 ease-out ${
-            isContactActive
-              ? `${CONTACT_CARD_CLASS} bg-black`
-              : "w-[min(300px,calc(100vw-2.5rem))] bg-card lg:w-full lg:max-w-none"
-          }`}
-        >
-          <div
-            className={`relative w-full ${
-              isContactActive
-                ? "aspect-square bg-black"
-                : "h-[200px] bg-black sm:h-[220px] lg:aspect-[16/9] lg:h-auto lg:bg-card"
-            }`}
-          >
-            {strip.map((item, index) => (
-              <div
-                key={`${item.label}-${item.src}`}
-                className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
-                  index === activeIndex ? "opacity-100" : "opacity-0"
-                }`}
-                aria-hidden={index !== activeIndex}
-              >
-                <QCImageFrame
-                  image={item}
-                  priority={index === 0}
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  fit="responsive"
-                />
+      {isContactActive ? (
+        <ContactPromoCard showLabel={false} />
+      ) : (
+        <>
+          <div className="flex w-full justify-center lg:block">
+            <div className="hud-frame w-[min(300px,calc(100vw-2.5rem))] shrink-0 overflow-hidden border border-border bg-card lg:w-full lg:max-w-none">
+              <div className="relative h-[200px] w-full bg-black sm:h-[220px] lg:aspect-[16/9] lg:h-auto lg:bg-card">
+                {strip.map((item, index) => (
+                  <div
+                    key={`${item.label}-${item.src}`}
+                    className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+                      index === activeIndex ? "opacity-100" : "opacity-0"
+                    }`}
+                    aria-hidden={index !== activeIndex}
+                  >
+                    <QCImageFrame
+                      image={item}
+                      priority={index === 0}
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      fit="responsive"
+                    />
+                  </div>
+                ))}
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent lg:from-black/25 lg:to-black/10" />
               </div>
-            ))}
-            <div
-              className={`pointer-events-none absolute inset-0 ${
-                isContactActive
-                  ? ""
-                  : "bg-gradient-to-t from-black/20 via-transparent to-transparent lg:from-black/25 lg:to-black/10"
-              }`}
-            />
+              <div className="flex items-center justify-between gap-3 border-t border-border bg-card px-3 py-2 lg:hidden">
+                <p className="font-display text-[9px] uppercase tracking-[0.15em] text-muted">
+                  {strip[activeIndex]?.label}
+                </p>
+                <p className="shrink-0 font-display text-[9px] uppercase tracking-[0.15em] text-accent">
+                  {strip[activeIndex]?.status}
+                </p>
+              </div>
+            </div>
           </div>
-          <div className="flex items-center justify-between gap-3 border-t border-border bg-card px-3 py-2 lg:hidden">
-            <p className="font-display text-[9px] uppercase tracking-[0.15em] text-muted">
-              {strip[activeIndex]?.label}
-            </p>
-            <p className="shrink-0 font-display text-[9px] uppercase tracking-[0.15em] text-accent">
-              {strip[activeIndex]?.status}
-            </p>
-          </div>
-        </div>
-      </div>
+        </>
+      )}
 
       <div className="mt-4 w-full sm:mt-5">
         <div className="mb-2 flex items-center justify-between gap-4 sm:mb-3">
