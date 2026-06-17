@@ -1,7 +1,9 @@
-"use client";
-
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  CONTACT_CARD_CLASS,
+  CONTACT_IMAGE,
+} from "@/components/contact-promo-card";
 import type { HeroQCImage } from "@/lib/hero-qc";
 import type { HeroQcCategoryKey } from "@/lib/kakobuy-hero-images";
 import { isLegacyPlaceholder } from "@/lib/kakobuy-hero-products";
@@ -29,11 +31,12 @@ function QCImageFrame({
   className?: string;
   fit?: "cover" | "contain" | "responsive";
 }) {
-  const isContactGraphic = image.src.includes("contact-customer-service");
+  const isContactGraphic =
+    image.src.includes("contact-customer-service") ||
+    image.src === CONTACT_IMAGE;
 
-  const fitClass =
-    isContactGraphic
-      ? "object-contain p-3"
+  const fitClass = isContactGraphic
+    ? "object-contain object-center p-1"
       : fit === "contain"
         ? "object-contain"
         : fit === "responsive"
@@ -123,6 +126,12 @@ export function HeroQCGallery({ strip: initialStrip }: { strip: HeroQCImage[] })
     });
   }, [activeIndex]);
 
+  const activeItem = strip[activeIndex];
+  const isContactActive = Boolean(
+    activeItem?.src.includes("contact-customer-service") ||
+      activeItem?.src === CONTACT_IMAGE,
+  );
+
   return (
     <div
       className="w-full"
@@ -132,12 +141,20 @@ export function HeroQCGallery({ strip: initialStrip }: { strip: HeroQCImage[] })
       onBlur={() => setPaused(false)}
     >
       {/* Mobile: fixed-width card centered with flex. Desktop: full-width column. */}
-      <div className="flex w-full justify-center lg:block">
+      <div className="flex w-full justify-center">
         <div
-          className="hud-frame w-[min(300px,calc(100vw-2.5rem))] shrink-0 overflow-hidden border border-border bg-card lg:w-full lg:max-w-none"
+          className={`hud-frame shrink-0 overflow-hidden border border-border transition-[width,height] duration-500 ease-out ${
+            isContactActive
+              ? `${CONTACT_CARD_CLASS} bg-black`
+              : "w-[min(300px,calc(100vw-2.5rem))] bg-card lg:w-full lg:max-w-none"
+          }`}
         >
           <div
-            className="relative h-[200px] w-full bg-black sm:h-[220px] lg:aspect-[16/9] lg:h-auto lg:bg-card"
+            className={`relative w-full ${
+              isContactActive
+                ? "aspect-square bg-black"
+                : "h-[200px] bg-black sm:h-[220px] lg:aspect-[16/9] lg:h-auto lg:bg-card"
+            }`}
           >
             {strip.map((item, index) => (
               <div
@@ -155,7 +172,13 @@ export function HeroQCGallery({ strip: initialStrip }: { strip: HeroQCImage[] })
                 />
               </div>
             ))}
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent lg:from-black/25 lg:to-black/10" />
+            <div
+              className={`pointer-events-none absolute inset-0 ${
+                isContactActive
+                  ? ""
+                  : "bg-gradient-to-t from-black/20 via-transparent to-transparent lg:from-black/25 lg:to-black/10"
+              }`}
+            />
           </div>
           <div className="flex items-center justify-between gap-3 border-t border-border bg-card px-3 py-2 lg:hidden">
             <p className="font-display text-[9px] uppercase tracking-[0.15em] text-muted">
