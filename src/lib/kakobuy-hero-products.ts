@@ -1,4 +1,4 @@
-import { HERO_QC_CONTACT, type HeroQCImage } from "@/lib/hero-qc";
+import type { HeroQCImage } from "@/lib/hero-qc";
 import {
   buildCategoryHeroImage,
   getChinaDateKey,
@@ -131,8 +131,7 @@ export function isKakobuyProductImage(src: string): boolean {
 }
 
 export function buildCuratedHeroQcStrip(): HeroQCImage[] {
-  const dynamic = HERO_QC_DYNAMIC_ORDER.map((key) => getCuratedDailyHero(key));
-  return [...dynamic.slice(0, 3), HERO_QC_CONTACT, ...dynamic.slice(3)];
+  return HERO_QC_DYNAMIC_ORDER.map((key) => getCuratedDailyHero(key));
 }
 
 export async function getDailyHeroQcStripForClient(): Promise<HeroQCImage[]> {
