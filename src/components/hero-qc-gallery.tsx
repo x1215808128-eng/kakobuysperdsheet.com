@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { HeroQCImage } from "@/lib/hero-qc";
