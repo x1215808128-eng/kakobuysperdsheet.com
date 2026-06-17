@@ -21,13 +21,24 @@ function QCImageFrame({
   priority = false,
   sizes,
   className = "",
+  fit = "cover",
 }: {
   image: HeroQCImage;
   priority?: boolean;
   sizes: string;
   className?: string;
+  fit?: "cover" | "contain" | "responsive";
 }) {
   const isContactGraphic = image.src.includes("contact-customer-service");
+
+  const fitClass =
+    isContactGraphic
+      ? "object-contain p-3"
+      : fit === "contain"
+        ? "object-contain"
+        : fit === "responsive"
+          ? "object-contain p-3 max-lg:p-4 lg:object-cover lg:p-0"
+          : "object-cover";
 
   return (
     <Image
@@ -37,7 +48,7 @@ function QCImageFrame({
       priority={priority}
       unoptimized={image.src.startsWith("/") || image.src.includes("geilicdn.com")}
       sizes={sizes}
-      className={`${isContactGraphic ? "object-contain p-3" : "object-cover"} object-center contrast-[1.15] saturate-[0.85] ${className}`}
+      className={`${fitClass} object-center contrast-[1.15] saturate-[0.85] ${className}`}
     />
   );
 }
@@ -114,34 +125,51 @@ export function HeroQCGallery({ strip: initialStrip }: { strip: HeroQCImage[] })
 
   return (
     <div
+      className="w-full"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
     >
-      <div className="hud-frame overflow-hidden border border-border bg-card">
-        <div className="relative aspect-[16/10] sm:aspect-[16/9]">
-          {strip.map((item, index) => (
-            <div
-              key={`${item.label}-${item.src}`}
-              className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
-                index === activeIndex ? "opacity-100" : "opacity-0"
-              }`}
-              aria-hidden={index !== activeIndex}
-            >
-              <QCImageFrame
-                image={item}
-                priority={index === 0}
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-            </div>
-          ))}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-black/10" />
+      {/* Mobile: fixed-width card centered with flex. Desktop: full-width column. */}
+      <div className="flex w-full justify-center lg:block">
+        <div
+          className="hud-frame w-[min(300px,calc(100vw-2.5rem))] shrink-0 overflow-hidden border border-border bg-card lg:w-full lg:max-w-none"
+        >
+          <div
+            className="relative h-[200px] w-full bg-black sm:h-[220px] lg:aspect-[16/9] lg:h-auto lg:bg-card"
+          >
+            {strip.map((item, index) => (
+              <div
+                key={`${item.label}-${item.src}`}
+                className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+                  index === activeIndex ? "opacity-100" : "opacity-0"
+                }`}
+                aria-hidden={index !== activeIndex}
+              >
+                <QCImageFrame
+                  image={item}
+                  priority={index === 0}
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  fit="responsive"
+                />
+              </div>
+            ))}
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent lg:from-black/25 lg:to-black/10" />
+          </div>
+          <div className="flex items-center justify-between gap-3 border-t border-border bg-card px-3 py-2 lg:hidden">
+            <p className="font-display text-[9px] uppercase tracking-[0.15em] text-muted">
+              {strip[activeIndex]?.label}
+            </p>
+            <p className="shrink-0 font-display text-[9px] uppercase tracking-[0.15em] text-accent">
+              {strip[activeIndex]?.status}
+            </p>
+          </div>
         </div>
       </div>
 
-      <div className="mt-5">
-        <div className="mb-3 flex items-center justify-between gap-4">
+      <div className="mt-4 w-full sm:mt-5">
+        <div className="mb-2 flex items-center justify-between gap-4 sm:mb-3">
           <p className="font-display text-[10px] uppercase tracking-[0.25em] text-muted">
             Recent QC
           </p>
@@ -165,7 +193,7 @@ export function HeroQCGallery({ strip: initialStrip }: { strip: HeroQCImage[] })
                 }}
                 type="button"
                 onClick={() => goTo(index)}
-                className={`qc-scroll-item group w-[140px] shrink-0 border bg-card text-left transition-colors sm:w-[160px] ${
+                className={`qc-scroll-item group w-[118px] shrink-0 border bg-card text-left transition-colors sm:w-[160px] ${
                   isActive
                     ? "border-accent"
                     : "border-border hover:border-accent/50"
@@ -177,6 +205,7 @@ export function HeroQCGallery({ strip: initialStrip }: { strip: HeroQCImage[] })
                   <QCImageFrame
                     image={item}
                     sizes="160px"
+                    fit="responsive"
                     className="transition-transform duration-300 group-hover:scale-105"
                   />
                   {isActive && (

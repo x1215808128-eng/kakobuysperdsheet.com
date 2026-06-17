@@ -63,26 +63,26 @@ export function CategoryCard({ category, index }: CategoryCardProps) {
         aria-hidden
       />
 
-      <div className="relative z-10 flex h-full w-full flex-col justify-between p-4 sm:p-5">
-        <span className="font-display text-[10px] uppercase tracking-[0.2em] text-muted/80">
+      <div className="relative z-10 flex h-full w-full flex-col justify-between p-3 sm:p-5">
+        <span className="font-display text-[9px] uppercase tracking-[0.2em] text-muted/80 sm:text-[10px]">
           {String(index + 1).padStart(2, "0")}
         </span>
 
         <div>
-          <h3 className="font-display text-base font-bold uppercase leading-tight tracking-tight text-foreground transition-colors group-hover:text-accent sm:text-lg">
+          <h3 className="font-display text-sm font-bold uppercase leading-tight tracking-tight text-foreground transition-colors group-hover:text-accent sm:text-lg">
             {category.name}
           </h3>
-          <p className="mt-1 font-display text-[10px] uppercase tracking-[0.2em] text-muted">
+          <p className="mt-0.5 font-display text-[8px] uppercase tracking-[0.15em] text-muted sm:mt-1 sm:text-[10px] sm:tracking-[0.2em]">
             {category.tag}
           </p>
         </div>
 
-        <div className="mt-2 flex items-center justify-between">
-          <span className="font-display text-[9px] uppercase tracking-[0.15em] text-muted opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+        <div className="mt-1 flex items-center justify-between sm:mt-2">
+          <span className="font-display text-[9px] uppercase tracking-[0.15em] text-muted opacity-0 transition-opacity duration-300 group-hover:opacity-100 max-sm:hidden">
             View finds
           </span>
           <span
-            className="flex h-8 w-8 items-center justify-center border border-border bg-black/40 text-sm text-muted transition-all duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-black"
+            className="flex h-7 w-7 items-center justify-center border border-border bg-black/40 text-sm text-muted transition-all duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-black sm:h-8 sm:w-8"
             aria-hidden
           >
             →

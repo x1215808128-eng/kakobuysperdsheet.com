@@ -84,39 +84,42 @@ export default async function HomePage() {
       <JsonLd data={faqJsonLd(FAQ_ITEMS)} />
 
       {/* Hero — hierarchy inspired by SSENSE / Balenciaga: stacked headline + dominant primary CTA */}
-      <section className="px-4 py-12 md:py-20 lg:py-24">
+      <section className="px-4 py-8 md:py-20 lg:py-24">
         <div className="mx-auto max-w-6xl">
-          <div className="grid gap-10 lg:grid-cols-12 lg:gap-8 lg:items-start">
-            <div className="flex flex-col lg:col-span-5 lg:pt-4">
-              <p className="font-display text-[11px] uppercase tracking-[0.35em] text-muted">
+          <div className="flex flex-col gap-6 lg:grid lg:grid-cols-12 lg:gap-8 lg:items-start">
+            <div className="order-2 flex flex-col lg:order-1 lg:col-span-5 lg:pt-4">
+              <p className="font-display text-[10px] uppercase tracking-[0.3em] text-muted sm:text-[11px] sm:tracking-[0.35em]">
                 THE ULTIMATE ARCHIVE
               </p>
 
-              <h1 className="mt-5 font-display text-[2.5rem] font-bold uppercase leading-[0.95] tracking-tight text-foreground sm:text-5xl lg:text-[3.5rem]">
+              <h1 className="mt-3 font-display text-[1.625rem] font-bold uppercase leading-[1.05] tracking-tight text-foreground sm:mt-5 sm:text-5xl sm:leading-[0.95] lg:text-[3.5rem]">
                 <span className="block">Kakobuy Spreadsheet</span>
-                <span className="mt-2 block text-[1.75rem] sm:text-4xl lg:text-[2.75rem]">
+                <span className="mt-1 block text-xl sm:mt-2 sm:text-4xl lg:text-[2.75rem]">
                   {SITE.year}
-                </span>
-                <span className="mt-4 flex items-start gap-3 sm:gap-4">
-                  <span className="min-w-0">
-                    <span className="block text-accent">{SITE.productCount}</span>
-                    <span className="mt-1 block text-[1.5rem] sm:text-3xl lg:text-[2.25rem]">
-                      Verified Products
-                    </span>
-                    <span className="block text-[1.5rem] sm:text-3xl lg:text-[2.25rem]">
-                      &amp; Best Batches
-                    </span>
-                  </span>
-                  <HeroContactPromo />
                 </span>
               </h1>
 
-              <p className="mt-8 max-w-md text-[15px] leading-[1.7] text-muted">
+              <div className="mt-4 flex flex-col gap-5 sm:mt-5 sm:gap-6 lg:flex-row lg:items-start lg:gap-8">
+                <div className="min-w-0 font-display font-bold uppercase leading-[1.1] tracking-tight">
+                  <p className="text-xl text-accent sm:text-3xl lg:text-[2.5rem]">
+                    {SITE.productCount}
+                  </p>
+                  <p className="mt-1 text-lg text-foreground sm:mt-1.5 sm:text-3xl lg:text-[2.25rem]">
+                    Verified Products
+                  </p>
+                  <p className="text-lg text-foreground sm:text-3xl lg:text-[2.25rem]">
+                    &amp; Best Batches
+                  </p>
+                </div>
+                <HeroContactPromo className="lg:pt-1" />
+              </div>
+
+              <p className="mt-5 max-w-md text-sm leading-[1.65] text-muted sm:mt-8 sm:text-[15px] sm:leading-[1.7]">
                 Curated database with real QC photos, USD pricing, and verified
                 Taobao, Weidian, and 1688 links.
               </p>
 
-              <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-stretch">
+              <div className="mt-6 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:items-stretch">
                 <CTAButton
                   href={SITE.spreadsheetUrl}
                   variant="primary"
@@ -136,7 +139,7 @@ export default async function HomePage() {
               </div>
             </div>
 
-            <div className="lg:col-span-7">
+            <div className="order-1 w-full lg:order-2 lg:col-span-7">
               <HeroQCGallery strip={heroQcStrip} />
             </div>
           </div>
@@ -144,10 +147,10 @@ export default async function HomePage() {
       </section>
 
       {/* Categories */}
-      <section id="spreadsheet" className="border-t border-border bg-surface px-4 py-16">
+      <section id="spreadsheet" className="border-t border-border bg-surface px-4 py-10 md:py-16">
         <div className="mx-auto max-w-6xl">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <h2 className="text-3xl font-bold text-foreground">
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <h2 className="text-2xl font-bold text-foreground md:text-3xl">
               Browse by Category
             </h2>
             <span className="font-display text-xs uppercase tracking-[0.25em] text-muted">

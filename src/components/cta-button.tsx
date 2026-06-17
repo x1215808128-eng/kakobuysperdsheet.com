@@ -18,7 +18,7 @@ export function CTAButton({
 }: CTAButtonProps) {
   const sizeStyles =
     size === "lg"
-      ? "w-full min-h-[3.25rem] px-10 py-4 text-sm tracking-[0.18em] sm:w-auto sm:min-w-[280px]"
+      ? "w-full min-h-12 px-8 py-3.5 text-sm tracking-[0.16em] sm:min-h-[3.25rem] sm:w-auto sm:min-w-[280px] sm:px-10 sm:py-4 sm:tracking-[0.18em]"
       : "w-full px-6 py-3 text-xs tracking-[0.15em] sm:w-auto";
 
   const base = `inline-flex items-center justify-center gap-3 rounded-none font-display font-bold uppercase transition-all ${sizeStyles}`;
