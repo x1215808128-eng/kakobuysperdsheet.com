@@ -3,7 +3,10 @@
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { HeroQCImage } from "@/lib/hero-qc";
-import type { HeroQcCategoryKey } from "@/lib/kakobuy-hero-images";
+import {
+  getHeroQcCategoryProductsUrl,
+  type HeroQcCategoryKey,
+} from "@/lib/kakobuy-hero-images";
 import { isLegacyPlaceholder } from "@/lib/kakobuy-hero-products";
 
 const ROTATE_MS = 4500;
@@ -53,6 +56,17 @@ function QCImageFrame({
   );
 }
 
+function getStripItemHref(item: HeroQCImage, index: number): string {
+  if (item.href) return item.href;
+
+  const key = STRIP_CATEGORY_ORDER[index];
+  return key ? getHeroQcCategoryProductsUrl(key) : "https://www.kakobuyplus.com/en/products?page=1";
+}
+
+function isExternalHref(href: string) {
+  return href.startsWith("http");
+}
+
 function mergeStripFromApi(prev: HeroQCImage[], apiStrip: HeroQCImage[]): HeroQCImage[] {
   if (apiStrip.length !== prev.length) return prev;
 
@@ -62,7 +76,10 @@ function mergeStripFromApi(prev: HeroQCImage[], apiStrip: HeroQCImage[]): HeroQC
     if (!apiItem?.src || isLegacyPlaceholder(apiItem.src, slot)) return item;
     if (item.src === apiItem.src) return item;
 
-    return apiItem;
+    return {
+      ...apiItem,
+      href: apiItem.href || item.href,
+    };
   });
 }
 
@@ -124,6 +141,49 @@ export function HeroQCGallery({ strip: initialStrip }: { strip: HeroQCImage[] })
   }, [activeIndex]);
 
   const activeItem = strip[activeIndex];
+  const activeHref = activeItem
+    ? getStripItemHref(activeItem, activeIndex)
+    : "https://www.kakobuyplus.com/en/products?page=1";
+  const activeExternal = isExternalHref(activeHref);
+
+  const heroFrame = (
+    <div className="hud-frame w-[min(300px,calc(100vw-2.5rem))] shrink-0 overflow-hidden border border-border bg-card transition-colors group-hover/hero:border-accent/70 lg:w-full lg:max-w-none">
+      <div className="relative h-[200px] w-full bg-black sm:h-[220px] lg:aspect-[16/9] lg:h-auto lg:bg-card">
+        {strip.map((item, index) => (
+          <div
+            key={`${item.label}-${item.src}`}
+            className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+              index === activeIndex ? "opacity-100" : "opacity-0"
+            }`}
+            aria-hidden={index !== activeIndex}
+          >
+            <QCImageFrame
+              image={item}
+              priority={index === 0}
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              fit="responsive"
+              className="transition-transform duration-500 group-hover/hero:scale-[1.02]"
+            />
+          </div>
+        ))}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent lg:from-black/40 lg:to-black/10" />
+        <div className="pointer-events-none absolute bottom-3 right-3 z-20">
+          <span className="inline-flex items-center gap-1.5 bg-accent px-3 py-1.5 font-display text-[10px] font-bold uppercase tracking-[0.14em] text-black shadow-lg transition-transform duration-300 group-hover/hero:scale-105 sm:px-4 sm:text-[11px]">
+            Shop
+            <span aria-hidden="true">→</span>
+          </span>
+        </div>
+      </div>
+      <div className="flex items-center justify-between gap-3 border-t border-border bg-card px-3 py-2 lg:hidden">
+        <p className="font-display text-[9px] uppercase tracking-[0.15em] text-muted">
+          {activeItem?.label}
+        </p>
+        <p className="shrink-0 font-display text-[9px] uppercase tracking-[0.15em] text-accent">
+          {activeItem?.status}
+        </p>
+      </div>
+    </div>
+  );
 
   return (
     <div
@@ -134,35 +194,25 @@ export function HeroQCGallery({ strip: initialStrip }: { strip: HeroQCImage[] })
       onBlur={() => setPaused(false)}
     >
       <div className="flex w-full justify-center lg:block">
-        <div className="hud-frame w-[min(300px,calc(100vw-2.5rem))] shrink-0 overflow-hidden border border-border bg-card lg:w-full lg:max-w-none">
-          <div className="relative h-[200px] w-full bg-black sm:h-[220px] lg:aspect-[16/9] lg:h-auto lg:bg-card">
-            {strip.map((item, index) => (
-              <div
-                key={`${item.label}-${item.src}`}
-                className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
-                  index === activeIndex ? "opacity-100" : "opacity-0"
-                }`}
-                aria-hidden={index !== activeIndex}
-              >
-                <QCImageFrame
-                  image={item}
-                  priority={index === 0}
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  fit="responsive"
-                />
-              </div>
-            ))}
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent lg:from-black/25 lg:to-black/10" />
-          </div>
-          <div className="flex items-center justify-between gap-3 border-t border-border bg-card px-3 py-2 lg:hidden">
-            <p className="font-display text-[9px] uppercase tracking-[0.15em] text-muted">
-              {activeItem?.label}
-            </p>
-            <p className="shrink-0 font-display text-[9px] uppercase tracking-[0.15em] text-accent">
-              {activeItem?.status}
-            </p>
-          </div>
-        </div>
+        {activeExternal ? (
+          <a
+            href={activeHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group/hero block"
+            aria-label={`Browse ${activeItem?.label ?? "category"} on KakobuyPlus`}
+          >
+            {heroFrame}
+          </a>
+        ) : (
+          <a
+            href={activeHref}
+            className="group/hero block"
+            aria-label={`View ${activeItem?.label ?? "category"}`}
+          >
+            {heroFrame}
+          </a>
+        )}
       </div>
 
       <div className="mt-4 w-full sm:mt-5">

@@ -1,6 +1,6 @@
 import type { HeroQCImage } from "@/lib/hero-qc";
+import { SPREADSHEET_PRODUCTS_BASE } from "@/lib/categories";
 import { filterHeroCarouselImageUrls } from "@/lib/kakobuy-product-image-filter";
-
 export type HeroQcCategoryKey =
   | "shoes"
   | "bottoms"
@@ -163,6 +163,23 @@ export const HERO_QC_DYNAMIC_ORDER: HeroQcCategoryKey[] = [
   "bags",
 ];
 
+export function getHeroQcCategoryProductsUrl(
+  key: HeroQcCategoryKey,
+  page = 1,
+): string {
+  const config = HERO_QC_CATEGORY_CONFIG[key];
+  const params = new URLSearchParams({
+    page: String(page),
+    categories: config.spreadsheetCategory,
+  });
+
+  if (config.listingSeason) {
+    params.set("seasons", config.listingSeason);
+  }
+
+  return `${SPREADSHEET_PRODUCTS_BASE}?${params.toString()}`;
+}
+
 export function toHeroProductImageUrl(url: string): string {
   const base = url.split("?")[0];
   return `${base}?imageView2/2/w/800/q/85/format/webp`;
@@ -193,6 +210,8 @@ export function buildCategoryHeroImage(
     label: config.label,
     status: config.status,
     category: config.category,
+    href: getHeroQcCategoryProductsUrl(key),
+    categoryKey: key,
   };
 }
 
