@@ -2,6 +2,7 @@
 title: "Kakobuy Budget Spreadsheet Guide for First Hauls (2026)"
 description: "Build your first budget haul with the Kakobuy Spreadsheet in 2026 — where to save, where to spend, real CNY price ranges on KakobuyPlus, and how to avoid shipping surprises."
 date: "2026-04-10"
+coverImage: "/news/kakobuy-budget-spreadsheet-first-haul-guide.jpg"
 excerpt: "A practical 2026 budget haul guide for the Kakobuy Spreadsheet — save on basics, spend on complex items, and build a first cart around $150 all-in without shipping shock."
 keywords:
   - "kakobuy budget spreadsheet"
@@ -22,7 +23,7 @@ Budget does not mean "buy the cheapest row no matter what."
 
 On the Kakobuy Spreadsheet, budget usually means:
 
-- Basics under roughly **¥150–¥350**
+- Basics under roughly **$50–$300**
 - Simple silhouettes with lower QC risk
 - Items where small flaws do not ruin the product
 - Pieces that stay useful even if your first haul teaches you a lesson

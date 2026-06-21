@@ -2,6 +2,7 @@
 title: "Best Taobao & Weidian Finds Using Kakobuy Spreadsheet (2026)"
 description: "The best Taobao and Weidian finds on the Kakobuy Spreadsheet in 2026 — trending Nike, Travis Scott, Chrome Hearts, Arc'teryx picks on KakobuyPlus and how to order them correctly."
 date: "2026-05-15"
+coverImage: "/news/best-taobao-weidian-finds-kakobuy-spreadsheet-2026.jpg"
 excerpt: "Trending Taobao and Weidian finds on the Kakobuy Spreadsheet in 2026 — what is actually worth buying, which categories dominate, and how to order through Kakobuy without dead links."
 keywords:
   - "kakobuy spreadsheet taobao finds"

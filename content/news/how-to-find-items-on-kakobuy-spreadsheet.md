@@ -2,6 +2,7 @@
 title: "How to Find Items on Kakobuy Spreadsheet: Top Picks & Search Tips"
 description: "How to find items on the Kakobuy Spreadsheet in 2026 — use KakobuyPlus search, category filters, price ranges, Hot picks, and a shortlist workflow before ordering."
 date: "2026-05-01"
+coverImage: "/news/how-to-find-items-on-kakobuy-spreadsheet.jpg"
 excerpt: "A practical search system for the Kakobuy Spreadsheet on KakobuyPlus — filters, keyword strategy, Hot items, dead-link checks, and a shortlist workflow that stops impulse buys."
 keywords:
   - "how to find items kakobuy spreadsheet"

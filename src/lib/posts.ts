@@ -5,10 +5,10 @@ import matter from "gray-matter";
 const POSTS_DIR = path.join(process.cwd(), "content/news");
 
 const DEFAULT_COVER_IMAGES: Record<string, string> = {
-  "how-to-use-kakobuy-spreadsheet-2026": "/categories/shoes.jpg",
-  "how-to-find-items-on-kakobuy-spreadsheet": "/categories/accessories.jpg",
-  "best-taobao-weidian-finds-kakobuy-spreadsheet-2026": "/categories/hoodies.jpg",
-  "kakobuy-budget-spreadsheet-first-haul-guide": "/categories/t-shirts.jpg",
+  "how-to-use-kakobuy-spreadsheet-2026": "/news/how-to-use-kakobuy-spreadsheet-2026.jpg",
+  "how-to-find-items-on-kakobuy-spreadsheet": "/news/how-to-find-items-on-kakobuy-spreadsheet.jpg",
+  "best-taobao-weidian-finds-kakobuy-spreadsheet-2026": "/news/best-taobao-weidian-finds-kakobuy-spreadsheet-2026.jpg",
+  "kakobuy-budget-spreadsheet-first-haul-guide": "/news/kakobuy-budget-spreadsheet-first-haul-guide.jpg",
 };
 
 function estimateReadingTimeMinutes(content: string): number {

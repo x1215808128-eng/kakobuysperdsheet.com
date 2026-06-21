@@ -2,6 +2,7 @@
 title: "How to Use Kakobuy Spreadsheet (2026 Beginner Guide)"
 description: "Step-by-step guide to using the Kakobuy Spreadsheet on KakobuyPlus in 2026 — browse 110,000+ products, paste links into Kakobuy, handle Weidian orders, review QC, and ship your first haul."
 date: "2026-06-10"
+coverImage: "/news/how-to-use-kakobuy-spreadsheet-2026.jpg"
 excerpt: "A practical beginner guide to the Kakobuy Spreadsheet — browse products on KakobuyPlus, order through Kakobuy, review QC photos, and ship your first haul without common mistakes."
 keywords:
   - "how to use kakobuy spreadsheet"
