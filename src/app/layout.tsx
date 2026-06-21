@@ -26,9 +26,14 @@ const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
 });
 
-export const metadata: Metadata = buildMetadata({
-  title: `Kakobuy Spreadsheet ${SITE.year} | ${SITE.productCount} Verified Products & Best Batches | Kakobuy Spreadsheet`,
-});
+export const metadata: Metadata = {
+  ...buildMetadata({
+    title: `Kakobuy Spreadsheet ${SITE.year} | ${SITE.productCount} Verified Products & Best Batches | Kakobuy Spreadsheet`,
+  }),
+  verification: {
+    google: "dxCnz-kYfgsZ-FMZ-73-umG6tLRi9c2g2qK9pgiXCSc",
+  },
+};
 
 export default function RootLayout({
   children,
