@@ -4,6 +4,8 @@ import matter from "gray-matter";
 
 const POSTS_DIR = path.join(process.cwd(), "content/news");
 
+export const NEWS_POSTS_PER_PAGE = 6;
+
 const DEFAULT_COVER_IMAGES: Record<string, string> = {
   "how-to-use-kakobuy-spreadsheet-2026": "/news/how-to-use-kakobuy-spreadsheet-2026.jpg",
   "how-to-find-items-on-kakobuy-spreadsheet": "/news/how-to-find-items-on-kakobuy-spreadsheet.jpg",
@@ -71,6 +73,43 @@ export function getAllPosts(): PostMeta[] {
       return meta;
     })
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+}
+
+export type PaginatedPosts = {
+  posts: PostMeta[];
+  currentPage: number;
+  totalPages: number;
+  totalPosts: number;
+  postsPerPage: number;
+  startIndex: number;
+  endIndex: number;
+};
+
+export function getPaginatedPosts(requestedPage = 1): PaginatedPosts {
+  const allPosts = getAllPosts();
+  const totalPosts = allPosts.length;
+  const totalPages = Math.max(1, Math.ceil(totalPosts / NEWS_POSTS_PER_PAGE));
+  const currentPage = Math.min(
+    Math.max(1, Number.isFinite(requestedPage) ? requestedPage : 1),
+    totalPages,
+  );
+  const startIndex = (currentPage - 1) * NEWS_POSTS_PER_PAGE;
+  const posts = allPosts.slice(startIndex, startIndex + NEWS_POSTS_PER_PAGE);
+
+  return {
+    posts,
+    currentPage,
+    totalPages,
+    totalPosts,
+    postsPerPage: NEWS_POSTS_PER_PAGE,
+    startIndex: totalPosts === 0 ? 0 : startIndex + 1,
+    endIndex: Math.min(startIndex + posts.length, totalPosts),
+  };
+}
+
+export function getNewsListPageHref(page: number): string {
+  if (page <= 1) return "/kakobuy-spreadsheet-news";
+  return `/kakobuy-spreadsheet-news?page=${page}`;
 }
 
 export function getPostBySlug(slug: string): Post | null {
