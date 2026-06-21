@@ -7,11 +7,11 @@ import {
   isLegacyPlaceholder,
 } from "@/lib/kakobuy-hero-products";
 
-export async function getDailyShoeHeroImage(): Promise<HeroQCImage> {
+export function getDailyShoeHeroImage(): HeroQCImage {
   return getDailyCategoryHeroImage("shoes");
 }
 
-export async function getDailyShoeHeroForClient(): Promise<HeroQCImage> {
+export function getDailyShoeHeroForClient(): HeroQCImage {
   return getDailyCategoryHeroForClient("shoes");
 }
 

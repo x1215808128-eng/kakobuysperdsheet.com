@@ -4,12 +4,27 @@ import matter from "gray-matter";
 
 const POSTS_DIR = path.join(process.cwd(), "content/news");
 
+const DEFAULT_COVER_IMAGES: Record<string, string> = {
+  "how-to-use-kakobuy-spreadsheet-2026": "/categories/shoes.jpg",
+  "how-to-find-items-on-kakobuy-spreadsheet": "/categories/accessories.jpg",
+  "best-taobao-weidian-finds-kakobuy-spreadsheet-2026": "/categories/hoodies.jpg",
+  "kakobuy-budget-spreadsheet-first-haul-guide": "/categories/t-shirts.jpg",
+};
+
+function estimateReadingTimeMinutes(content: string): number {
+  const words = content.trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(words / 200));
+}
+
 export type PostMeta = {
   slug: string;
   title: string;
   description: string;
   date: string;
   excerpt: string;
+  coverImage?: string;
+  author?: string;
+  readingTimeMinutes: number;
   keywords?: string[];
   relatedSlugs?: string[];
 };
@@ -29,6 +44,11 @@ function parseFile(filename: string): Post {
     description: data.description as string,
     date: data.date as string,
     excerpt: data.excerpt as string,
+    coverImage: data.coverImage as string | undefined,
+    author: (data.author as string | undefined) ?? "Kakobuy Spreadsheet",
+    readingTimeMinutes:
+      (data.readingTimeMinutes as number | undefined) ??
+      estimateReadingTimeMinutes(content),
     keywords: data.keywords as string[] | undefined,
     relatedSlugs: data.relatedSlugs as string[] | undefined,
     content,
@@ -74,4 +94,16 @@ export function formatDate(date: string): string {
     year: "numeric",
     month: "short",
   });
+}
+
+export function formatFullDate(date: string): string {
+  return new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
+export function getPostCoverImage(post: Pick<PostMeta, "slug" | "coverImage">): string {
+  return post.coverImage ?? DEFAULT_COVER_IMAGES[post.slug] ?? "/categories/shoes.jpg";
 }

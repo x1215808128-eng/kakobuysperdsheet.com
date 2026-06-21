@@ -1,4 +1,5 @@
 import { getHeroQcCategoryProductsUrl } from "@/lib/kakobuy-hero-images";
+import { getDailyHeroQcStrip } from "@/lib/kakobuy-hero-products";
 
 /** Hero QC imagery — local files live in /public/qc/ */
 export type HeroQCImage = {
@@ -62,9 +63,8 @@ export const HERO_QC_STRIP_STATIC: HeroQCImage[] = [
   },
 ];
 
-export async function buildHeroQcStrip(): Promise<HeroQCImage[]> {
-  const { buildCuratedHeroQcStrip } = await import("@/lib/kakobuy-hero-products");
-  return buildCuratedHeroQcStrip();
+export function buildHeroQcStrip(): HeroQCImage[] {
+  return getDailyHeroQcStrip();
 }
 
 export const HERO_QC_STRIP: HeroQCImage[] = [

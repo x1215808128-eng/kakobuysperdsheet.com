@@ -1,13 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { HeroQCImage } from "@/lib/hero-qc";
 import {
   getHeroQcCategoryProductsUrl,
   type HeroQcCategoryKey,
 } from "@/lib/kakobuy-hero-images";
 import { isLegacyPlaceholder } from "@/lib/kakobuy-hero-products";
+import { resolveHeroProductHref, resolveHeroStrip } from "@/lib/resolve-hero-product-href";
 
 const ROTATE_MS = 4500;
 
@@ -57,34 +58,49 @@ function QCImageFrame({
 }
 
 function getStripItemHref(item: HeroQCImage, index: number): string {
-  if (item.href) return item.href;
+  const categoryKey = item.categoryKey ?? STRIP_CATEGORY_ORDER[index];
+  const categoryFallback = categoryKey
+    ? getHeroQcCategoryProductsUrl(categoryKey)
+    : "https://www.kakobuyplus.com/en/products?page=1";
 
-  const key = STRIP_CATEGORY_ORDER[index];
-  return key ? getHeroQcCategoryProductsUrl(key) : "https://www.kakobuyplus.com/en/products?page=1";
+  return resolveHeroProductHref(item.src, item.href || categoryFallback);
 }
 
-function isExternalHref(href: string) {
-  return href.startsWith("http");
+function stripCacheBuster(src: string): string {
+  return src.replace(/([?&])t=\d+/g, "$1").replace(/[?&]$/, "");
 }
 
 function mergeStripFromApi(prev: HeroQCImage[], apiStrip: HeroQCImage[]): HeroQCImage[] {
   if (apiStrip.length !== prev.length) return prev;
 
-  return prev.map((item, index) => {
+  const merged = prev.map((item, index) => {
     const slot = STRIP_CATEGORY_ORDER[index];
     const apiItem = apiStrip[index];
     if (!apiItem?.src || isLegacyPlaceholder(apiItem.src, slot)) return item;
-    if (item.src === apiItem.src) return item;
 
-    return {
-      ...apiItem,
-      href: apiItem.href || item.href,
-    };
+    const sameImage =
+      item.src === apiItem.src ||
+      stripCacheBuster(item.src) === stripCacheBuster(apiItem.src);
+
+    if (sameImage) {
+      return {
+        ...item,
+        src: apiItem.src,
+      };
+    }
+
+    return apiItem;
   });
+
+  return resolveHeroStrip(merged);
 }
 
 export function HeroQCGallery({ strip: initialStrip }: { strip: HeroQCImage[] }) {
-  const [strip, setStrip] = useState(initialStrip);
+  const resolvedInitialStrip = useMemo(
+    () => resolveHeroStrip(initialStrip),
+    [initialStrip],
+  );
+  const [strip, setStrip] = useState(resolvedInitialStrip);
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const thumbRefs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -99,7 +115,7 @@ export function HeroQCGallery({ strip: initialStrip }: { strip: HeroQCImage[] })
   }, [strip.length]);
 
   useEffect(() => {
-    setStrip(initialStrip);
+    setStrip(resolveHeroStrip(initialStrip));
   }, [initialStrip]);
 
   useEffect(() => {
@@ -144,7 +160,6 @@ export function HeroQCGallery({ strip: initialStrip }: { strip: HeroQCImage[] })
   const activeHref = activeItem
     ? getStripItemHref(activeItem, activeIndex)
     : "https://www.kakobuyplus.com/en/products?page=1";
-  const activeExternal = isExternalHref(activeHref);
 
   const heroFrame = (
     <div className="hud-frame w-[min(300px,calc(100vw-2.5rem))] shrink-0 overflow-hidden border border-border bg-card transition-colors group-hover/hero:border-accent/70 lg:w-full lg:max-w-none">
@@ -194,25 +209,15 @@ export function HeroQCGallery({ strip: initialStrip }: { strip: HeroQCImage[] })
       onBlur={() => setPaused(false)}
     >
       <div className="flex w-full justify-center lg:block">
-        {activeExternal ? (
-          <a
-            href={activeHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group/hero block"
-            aria-label={`Browse ${activeItem?.label ?? "category"} on KakobuyPlus`}
-          >
-            {heroFrame}
-          </a>
-        ) : (
-          <a
-            href={activeHref}
-            className="group/hero block"
-            aria-label={`View ${activeItem?.label ?? "category"}`}
-          >
-            {heroFrame}
-          </a>
-        )}
+        <a
+          href={activeHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group/hero block"
+          aria-label={`View ${activeItem?.label ?? "product"} on KakobuyPlus`}
+        >
+          {heroFrame}
+        </a>
       </div>
 
       <div className="mt-4 w-full sm:mt-5">

@@ -1,6 +1,7 @@
 import type { HeroQCImage } from "@/lib/hero-qc";
 import { SPREADSHEET_PRODUCTS_BASE } from "@/lib/categories";
 import { filterHeroCarouselImageUrls } from "@/lib/kakobuy-product-image-filter";
+import { resolveHeroProductHref } from "@/lib/resolve-hero-product-href";
 export type HeroQcCategoryKey =
   | "shoes"
   | "bottoms"
@@ -202,15 +203,20 @@ export function getDailyCategoryIndex(key: HeroQcCategoryKey): number {
 export function buildCategoryHeroImage(
   key: HeroQcCategoryKey,
   imageUrl: string,
+  productHref?: string,
 ): HeroQCImage {
   const config = HERO_QC_CATEGORY_CONFIG[key];
+  const categoryFallback = getHeroQcCategoryProductsUrl(key);
   return {
     src: toHeroProductImageUrl(imageUrl),
     alt: config.alt,
     label: config.label,
     status: config.status,
     category: config.category,
-    href: getHeroQcCategoryProductsUrl(key),
+    href: resolveHeroProductHref(
+      imageUrl,
+      productHref ?? categoryFallback,
+    ),
     categoryKey: key,
   };
 }

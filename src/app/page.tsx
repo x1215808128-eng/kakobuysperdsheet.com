@@ -76,7 +76,7 @@ const BENEFITS = [
 ];
 
 export default async function HomePage() {
-  const heroQcStrip = await buildHeroQcStrip();
+  const heroQcStrip = buildHeroQcStrip();
 
   return (
     <>
