@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { NewsCard } from "@/components/news-card";
+import { NewsFaqSection } from "@/components/news-faq";
 import { NewsPagination } from "@/components/news-pagination";
 import {
   getPaginatedPosts,
@@ -71,7 +72,7 @@ export default async function NewsPage({ searchParams }: NewsPageProps) {
           </p>
           {totalPosts > 0 && (
             <p className="mt-5 font-display text-[11px] uppercase tracking-[0.2em] text-muted/80">
-              Showing {startIndex}–{endIndex} of {totalPosts} articles ·{" "}
+              {totalPosts} articles · Showing {startIndex}–{endIndex} ·{" "}
               {NEWS_POSTS_PER_PAGE} per page
             </p>
           )}
@@ -88,6 +89,8 @@ export default async function NewsPage({ searchParams }: NewsPageProps) {
         )}
 
         <NewsPagination currentPage={currentPage} totalPages={totalPages} />
+
+        <NewsFaqSection />
       </div>
     </article>
   );
