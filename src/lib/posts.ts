@@ -13,6 +13,8 @@ const DEFAULT_COVER_IMAGES: Record<string, string> = {
   "kakobuy-budget-spreadsheet-first-haul-guide": "/news/kakobuy-budget-spreadsheet-first-haul-guide.jpg",
   "kakobuy-qc-photos-guide-2026": "/news/kakobuy-qc-photos-guide-2026.jpg",
   "kakobuy-shipping-consolidation-guide-2026": "/news/kakobuy-shipping-consolidation-guide-2026.jpg",
+  "kakobuy-customs-declaration-guide-2026": "/news/kakobuy-customs-declaration-guide-2026.jpg",
+  "kakobuy-returns-exchanges-guide-2026": "/news/kakobuy-returns-exchanges-guide-2026.jpg",
 };
 
 function estimateReadingTimeMinutes(content: string): number {
