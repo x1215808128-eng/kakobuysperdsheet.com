@@ -2,7 +2,7 @@
 title: "Kakobuy Returns & Exchanges Guide: Fix QC Issues Before You Ship (2026)"
 description: "What to do when Kakobuy QC fails — reject, exchange, refund timelines, seller return windows, and how to protect spreadsheet hauls before international shipping."
 date: "2026-07-15"
-coverImage: "/news/kakobuy-returns-exchanges-guide-2026.jpg?v=20260702"
+coverImage: "/news/kakobuy-returns-exchanges-guide-2026.jpg?v=20260703"
 excerpt: "Wrong size, bad stitching, or a listing mismatch? Learn Kakobuy's return and exchange workflow while items are still in China — and why spreadsheet buyers should never ship before QC is resolved."
 keywords:
   - "kakobuy return policy"
