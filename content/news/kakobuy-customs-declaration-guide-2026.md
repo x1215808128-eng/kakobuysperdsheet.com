@@ -2,7 +2,7 @@
 title: "Kakobuy Customs & Declaration Guide for Spreadsheet Hauls (2026)"
 description: "How to declare Kakobuy Spreadsheet hauls in 2026 — realistic values, itemized descriptions, tax-free lines, DDP vs DDU, and customs mistakes that trigger holds."
 date: "2026-07-08"
-coverImage: "/news/kakobuy-customs-declaration-guide-2026.jpg"
+coverImage: "/news/kakobuy-customs-declaration-guide-2026.jpg?v=20260701"
 excerpt: "Spreadsheet prices are not customs paperwork — learn how to declare Kakobuy parcels with believable item lists, choose safer shipping lines, and avoid seizure or surprise duty bills in 2026."
 keywords:
   - "kakobuy customs declaration"
